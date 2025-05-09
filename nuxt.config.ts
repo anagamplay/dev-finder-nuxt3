@@ -1,5 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  target: 'static',
+
+  router: {
+    base: '/dev-finder-nuxt3/', 
+  },
+
+  generate: {
+    fallback: true
+  },
+  ssr: true,
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   css: ['./assets/css/global.css'],
@@ -16,9 +26,9 @@ export default defineNuxtConfig({
     cssLayer: 'base'
   },
   colorMode: {
-    preference: 'system', 
-    fallback: 'dark',   
-    classSuffix: '',   
+    preference: 'system',
+    fallback: 'dark',
+    classSuffix: '',
   },
   runtimeConfig: {
     GITHUB_TOKEN: process.env.GITHUB_TOKEN,
@@ -27,5 +37,4 @@ export default defineNuxtConfig({
       FIREBASE_API_KEY: process.env.FIREBASE_API_KEY
     }
   },
-
 })
