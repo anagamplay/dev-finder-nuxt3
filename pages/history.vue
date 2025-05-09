@@ -17,15 +17,17 @@
                 <img :src="item.urlImgPerfil" alt="Avatar" class="w-16 h-16 rounded-full" />
                 <div class="flex-1">
                     <p class="font-semibold">{{ item.nome }} <span class="text-sm text-gray-500">(@{{ item.usuario
-                    }})</span></p>
+                            }})</span></p>
                     <p class="text-xs text-gray-400">Consultado em: {{ formatDate(item.dataConsulta) }}</p>
-                    <div class="flex flex-wrap gap-2 mt-2">
+                    <div class="flex flex-wrap gap-2 mt-2 break-words">
                         <a v-for="(link, index) in item.linksSociais" :key="index" :href="link" target="_blank"
-                            class="flex items-center text-primary text-sm hover:underline">
-                            <Icon name="uil:link" class="h-5 w-5 mr-2" />
-                            {{ link }}
+                            class="flex items-center text-primary text-sm hover:underline break-all max-w-full">
+                            <Icon name="uil:link" class="h-5 w-5 mr-2 shrink-0" />
+                            <span class="break-all">{{ link }}</span>
                         </a>
-                        <p v-if="item.linksSociais.length === 1" class="text-sm text-gray-400">- Sem link social</p>
+                        <p v-if="item.linksSociais.length === 1" class="text-sm text-gray-400 w-full">
+                            - Sem link social
+                        </p>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 <template>
     <button
       @click="toggleTheme"
-      class="flex items-center gap-3 px-4 py-2 text-sm transition-colors duration-300 ease-in-out"
+      class="flex items-center gap-3 px-4 text-sm transition-colors duration-300 ease-in-out"
     >
       {{ themeLabel }}
       <Icon

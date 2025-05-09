@@ -1,19 +1,22 @@
 <template>
     <div class="space-y-4">
         <div class="max-w-full sm:max-w-xl md:max-w-lg lg:max-w-3xl xl:max-w-4xl mx-auto my-10">
-            <div class="flex justify-between mb-2">
+            <div class="flex flex-wrap items-center gap-5 mb-2">
                 <b class="text-lg">DevFinder</b>
+
                 <NuxtLink to="/history">
                     Histórico
                 </NuxtLink>
-                <NuxtLink to="/contact">
-                    Fale Conosco
-                </NuxtLink>
-                <NuxtLink to="/login">
+
+                <NuxtLink :to="isLoggedIn ? '/account' : '/login'">
                     Conta
                 </NuxtLink>
-                <ThemeToggleButton />
+
+                <div class="ml-auto">
+                    <ThemeToggleButton />
+                </div>
             </div>
+
             <div class="flex items-center space-x-2 bg-lightgray dark:bg-bluegray pl-5 pr-2 py-2 rounded-xl">
                 <div class="flex-1">
                     <AppInput v-model="username" placeholder="Search GitHub username..." @enter="findUser" />
@@ -39,7 +42,7 @@ import { fetchGitHubUser, type GitHubUser } from '~~/services/githubService'
 const username = ref('')
 const user = ref<GitHubUser | null>(null)
 const errorMessage = ref('')
-const loading = ref(false)
+const isLoggedIn = typeof window !== 'undefined' && !!localStorage.getItem('user');
 
 export interface IHistoricoDePesquisas {
     urlImgPerfil: string
@@ -69,7 +72,6 @@ function saveToHistory(user: GitHubUser) {
 }
 
 async function findUser() {
-    loading.value = true
     errorMessage.value = ''
     user.value = null
 
@@ -83,10 +85,7 @@ async function findUser() {
         }
     } catch (error) {
         errorMessage.value = 'Usuário não encontrado. Verifique o nome e tente novamente.'
-    } finally {
-        loading.value = false
     }
-
 }
 
 </script>

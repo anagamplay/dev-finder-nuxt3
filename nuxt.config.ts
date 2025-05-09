@@ -8,6 +8,9 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@nuxt/icon',
   ],
+  plugins: [
+    './plugins/firebase.ts'
+  ],
   icon: {
     mode: 'css',
     cssLayer: 'base'
@@ -21,6 +24,7 @@ export default defineNuxtConfig({
     GITHUB_TOKEN: process.env.GITHUB_TOKEN,
     public: {
       GITHUB_TOKEN: process.env.GITHUB_TOKEN,
+      FIREBASE_API_KEY: process.env.FIREBASE_API_KEY
     }
   },
 

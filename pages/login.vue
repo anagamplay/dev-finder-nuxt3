@@ -1,7 +1,13 @@
 <template>
     <div class="min-h-screen flex flex-col items-center justify-center bg-gray-100">
         <div class="p-8 bg-lightgray dark:bg-bluegray rounded">
+            <button @click="router.replace('/')" class="mb-4 text-blue-600 hover:underline flex items-center gap-1">
+                <Icon name="uil:arrow-left" class="h-6 w-6" />
+                Voltar
+            </button>
+
             <h1 class="text-3xl font-bold mb-6 text-center text-ligthtxt dark:text-darktxt">Login</h1>
+            
             <button @click="loginWithGoogle"
                 class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition">
                 <svg class="w-6 h-6" viewBox="0 0 48 48">
@@ -22,20 +28,30 @@
 </template>
 
 <script setup lang="ts">
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { useRouter } from 'vue-router'
 
+const { $auth } = useNuxtApp()
 const router = useRouter()
 
 function loginWithGoogle() {
-    const auth = getAuth()
     const provider = new GoogleAuthProvider()
 
-    signInWithPopup(auth, provider)
+    signInWithPopup($auth, provider)
         .then((result) => {
             const user = result.user
+
+            const userData = {
+                uid: user.uid,
+                displayName: user.displayName,
+                email: user.email,
+                emailVerified: user.emailVerified,
+                photoURL: user.photoURL,
+            }
+            localStorage.setItem('user', JSON.stringify(userData))
+
             console.log('Usuário logado:', user)
-            router.push('/')
+            router.push('/account')
         })
         .catch((error) => {
             console.error('Erro durante o login:', error)
@@ -44,7 +60,6 @@ function loginWithGoogle() {
 </script>
 
 <style scoped>
-
 body {
     margin: 0;
 }
