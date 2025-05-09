@@ -1,2 +1,5 @@
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
-
+<template>
+    <div class="min-h-screen bg-lightbg text-lighttxt dark:bg-darkbg dark:text-darktxt p-4">
+        <NuxtPage />
+    </div>
+</template>

@@ -3,12 +3,12 @@
         <div class="flex flex-col space-y-2">
             <UserInfoItem icon="uil:map-marker" :content="user.location || 'Not Available'"
                 :available="!!user.location" />
-            <UserInfoItem icon="uil:link" :content="user.blog || 'Not Available'" :available="!!user.blog"
+            <UserInfoItem icon="uil:link" :content="user.blog || 'No social link'" :available="!!user.blog"
                 :link="user.blog ?? ''" />
         </div>
         <div class="flex flex-col space-y-2">
-            <UserInfoItem icon="uil:twitter" :content="user.twitter_username || 'Not Available'"
-                :available="!!user.twitter_username" :link="'x.com/' + user.twitter_username" />
+            <UserInfoItem icon="uil:twitter" :content="user.twitter_username || 'No social link'"
+                :available="!!user.twitter_username" :link="user.twitter_username ? 'x.com/' + user.twitter_username : ''" />
             <UserInfoItem icon="uil:building" :content="user.company || 'Not Available'" :available="!!user.company" />
         </div>
     </div>

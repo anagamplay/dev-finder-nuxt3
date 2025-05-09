@@ -18,20 +18,29 @@ export interface GitHubUser {
   created_at: string
 }
 
-const username = 'rafaballerini'
-
 export async function fetchGitHubUser(username: string): Promise<GitHubUser> {
+  if (!username.trim()) {
+    throw new Error('Nome de usuário inválido')
+  }
+
   const config = useRuntimeConfig()
   const octokit = new Octokit({
     auth: config.public.GITHUB_TOKEN,
   })
 
-  const response = await octokit.request('GET /users/{username}', {
-    username,
-    headers: {
-      'X-GitHub-Api-Version': '2022-11-28',
-    },
-  })
+  try {
+    const response = await octokit.request('GET /users/{username}', {
+      username,
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    })
 
-  return response.data as GitHubUser
+    return response.data as GitHubUser
+  } catch (error: any) {
+    if (error.status === 404) {
+      throw new Error('Usuário não encontrado')
+    }
+    throw error
+  }
 }
